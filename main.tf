@@ -5,10 +5,38 @@ terraform {
       version = "5.69.0"
     }
   }
+
+  backend "s3" {
+    bucket = "rocketseat-iac-2"
+    key = "state/terraform.tfstate"
+    region = "us-east-1"
+  }
+  
 }
 provider "aws" {
   region  = "us-east-1"
-  # profile = "AdministratorAccess-686255959518"
+  profile = "thiago"
 }
 
-#  aws s3 ls --profile AdministratorAccess-686255959518
+resource "aws_s3_bucket" "terraform-state" {
+  bucket        = "rocketseat-iac-2"
+  force_destroy = true
+
+  lifecycle {
+    prevent_destroy = true
+  }
+
+  tags = {
+    IAC = "True"
+  }
+}
+
+resource "aws_s3_bucket_versioning" "terraform-state" {
+  bucket = "rocketseat-iac-2"
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+#  AWS_PROFILE=thiago terraform init
