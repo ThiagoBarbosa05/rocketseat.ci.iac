@@ -15,7 +15,7 @@ terraform {
 }
 provider "aws" {
   region  = "us-east-1"
-  profile = "thiago"
+  # profile = "thiago"
 }
 
 resource "aws_s3_bucket" "terraform-state" {
