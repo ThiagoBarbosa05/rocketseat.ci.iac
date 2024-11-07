@@ -8,13 +8,13 @@ terraform {
 
   backend "s3" {
     bucket = "rocketseat-iac-2"
-    key = "state/terraform.tfstate"
+    key    = "state/terraform.tfstate"
     region = "us-east-1"
   }
-  
+
 }
 provider "aws" {
-  region  = "us-east-1"
+  region = "us-east-1"
   # profile = "thiago"
 }
 
