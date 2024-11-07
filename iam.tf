@@ -15,25 +15,25 @@ resource "aws_iam_role" "tf-role" {
   name = "tf-role"
 
   assume_role_policy = jsonencode({
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": "sts:AssumeRoleWithWebIdentity",
-            "Principal": {
-                "Federated": "arn:aws:iam::686255959518:oidc-provider/token.actions.githubusercontent.com"
-            },
-            "Condition": {
-                "StringEquals": {
-                    "token.actions.githubusercontent.com:aud": [
-                        "sts.amazonaws.com"
-                    ],
-                    "token.actions.githubusercontent.com:sub": [
-                        "repo:ThiagoBarbosa05/rocketseat.ci.iac:ref:refs/heads/main"
-                    ]
-                }
-            }
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Effect" : "Allow",
+        "Action" : "sts:AssumeRoleWithWebIdentity",
+        "Principal" : {
+          "Federated" : "arn:aws:iam::686255959518:oidc-provider/token.actions.githubusercontent.com"
+        },
+        "Condition" : {
+          "StringEquals" : {
+            "token.actions.githubusercontent.com:aud" : [
+              "sts.amazonaws.com"
+            ],
+            "token.actions.githubusercontent.com:sub" : [
+              "repo:ThiagoBarbosa05/rocketseat.ci.iac:ref:refs/heads/main"
+            ]
+          }
         }
+      }
     ]
   })
 
@@ -46,23 +46,23 @@ resource "aws_iam_role" "app-runner-role" {
   name = "app-runner-role"
 
   assume_role_policy = jsonencode({
-    "Version": "2012-10-17",
-    "Statement": [
+    "Version" : "2012-10-17",
+    "Statement" : [
       {
-        "Effect": "Allow",
-        "Principal": {
-          "Service": "build.apprunner.amazonaws.com"
+        "Effect" : "Allow",
+        "Principal" : {
+          "Service" : "build.apprunner.amazonaws.com"
         },
-        "Action": "sts:AssumeRole"
+        "Action" : "sts:AssumeRole"
       }
     ]
-})
+  })
 
-managed_policy_arns = [
-  "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-]
+  managed_policy_arns = [
+    "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+  ]
 
-tags = {
+  tags = {
     IAC = "True"
   }
 
@@ -72,36 +72,36 @@ resource "aws_iam_role" "ecr_role" {
   name = "ecr_role"
 
   assume_role_policy = jsonencode({
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": "sts:AssumeRoleWithWebIdentity",
-            "Principal": {
-                "Federated": "arn:aws:iam::686255959518:oidc-provider/token.actions.githubusercontent.com"
-            },
-            "Condition": {
-                "StringEquals": {
-                    "token.actions.githubusercontent.com:aud": [
-                        "sts.amazonaws.com"
-                    ],
-                    "token.actions.githubusercontent.com:sub": [
-                        "repo:ThiagoBarbosa05/rocketseat.ci.api:ref:refs/heads/main"
-                    ]
-                }
-            }
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Effect" : "Allow",
+        "Action" : "sts:AssumeRoleWithWebIdentity",
+        "Principal" : {
+          "Federated" : "arn:aws:iam::686255959518:oidc-provider/token.actions.githubusercontent.com"
+        },
+        "Condition" : {
+          "StringEquals" : {
+            "token.actions.githubusercontent.com:aud" : [
+              "sts.amazonaws.com"
+            ],
+            "token.actions.githubusercontent.com:sub" : [
+              "repo:ThiagoBarbosa05/rocketseat.ci.api:ref:refs/heads/main"
+            ]
+          }
         }
+      }
     ]
   })
 
-   inline_policy {
+  inline_policy {
     name = "ecr-app-permissions"
     policy = jsonencode({
       Statement = [
         {
-          Sid = "Statement1"
-          Action = "apprunner:*",
-          Effect = "Allow",
+          Sid      = "Statement1"
+          Action   = "apprunner:*",
+          Effect   = "Allow",
           Resource = "*"
 
         },
@@ -111,7 +111,7 @@ resource "aws_iam_role" "ecr_role" {
             "iam:PassRole",
             "iam:CreateServiceLinkedRole"
           ],
-          Effect = "Allow",
+          Effect   = "Allow",
           Resource = "*"
 
         },
