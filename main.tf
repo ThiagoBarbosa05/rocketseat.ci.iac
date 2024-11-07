@@ -8,7 +8,7 @@ terraform {
 }
 provider "aws" {
   region  = "us-east-1"
-  profile = "AdministratorAccess-686255959518"
+  # profile = "AdministratorAccess-686255959518"
 }
 
 #  aws s3 ls --profile AdministratorAccess-686255959518
